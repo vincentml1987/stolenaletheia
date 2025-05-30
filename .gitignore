@@ -1,0 +1,21 @@
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore logs
+*.log
+
+# Ignore temporary files
+*.tmp
+*.bak
+*.swp
+
+# Ignore build artifacts
+*.out
+*.obj
+
+# Ignore Python cache if used
+__pycache__/
+*.pyc
