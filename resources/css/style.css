@@ -59,3 +59,29 @@ footer {
     border-top: 1px solid #ccc;
     margin-top: 2rem;
 }
+
+nav.main-nav {
+  text-align: center;
+  margin-top: 1em;
+}
+
+nav.main-nav a {
+  margin: 0 0.5em;
+  text-decoration: underline;
+  color: #442255;
+  font-weight: 500;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+nav.main-nav a:hover {
+  text-decoration: none;
+  color: #6E3D6F;
+}
+
+
+nav.main-nav a.io-flag {
+  font-size: 0.9em;
+  color: #a03030;
+  border-bottom: 1px dashed #a03030;
+}
+

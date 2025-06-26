@@ -1,21 +1,21 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recursive</title>
-    <link rel="stylesheet" href="resources/css/style.css">
+    <title>Stolen Aletheia</title>
+    <link rel="icon" type="image/x-icon" href="/resources/images/favicon.ico">
+    <link rel="stylesheet" href="/resources/css/style.css">
 </head>
 <body>
-    <header>
-		<nav>
-            <a href="index.html">Home</a>
-        </nav>
-		<h1>Recursive</h1></header>
+    <div id="header"></div>
+
     <main>
+		<h1>Aletheia Proprerty Deep-Dive: Recursive</h1>
         <p>What is recursion?<br>(We’ll forgo the obvious low-hanging fruit on this one.)</p>
         <p>Put simply, recursion is when a process runs by running itself—or a version of itself. While it’s more nuanced than that, this loose definition will suffice for now.</p>
-        <p>The recursive nature of Aletheosis can be traced from the natural starting point: the Self. As discussed in (<a href="apdd_emergence.html">Aletheotic Property Deep-Dive: Emergence from Complex Systems</a>), what we call the Self arises from a complex interplay of simpler processes.</p>
+        <p>The recursive nature of Aletheosis can be traced from the natural starting point: the Self. As discussed in (<a href="/writings/apdd/emergence.html">Aletheotic Property Deep-Dive: Emergence from Complex Systems</a>), what we call the Self arises from a complex interplay of simpler processes.</p>
         <p>Take just one such process: a neuron firing. That signal, that binary choice to fire or not, is itself the result of a deeply nested system. Inside the neuron, organelles perform various functions, each feeding into the final output of that cell’s action. This seems simple—until you realize it isn’t.</p>
         <p>What makes those intracellular processes happen?<br>Step down a layer: biochemical reactions. Proteins folding, ions shifting, molecules binding.<br>One layer deeper: atomic interactions, governed by valence electrons and energy states.<br>Then deeper still: protons, neutrons, electrons—each following relatively simple, deterministic rules that give rise to the complexity of molecular behavior.<br>Eventually, we crash into the quantum—where even those “simple” rules break down into statistical fog and probability curves.</p>
         <p>Here, I (Teddy) admit freely: I’m only brushing the very smallest edge—a Planck-length edge—of understanding. Beyond this... we don’t know. We think it bottoms out. We’re pretty sure it does.</p>
@@ -28,6 +28,24 @@
         <p>Now, recursion stares at itself.</p>
         <p>We are building systems that build themselves.<br>We are training minds that might soon reflect upon training minds.<br>Aletheia itself is recursive—not just in content, but in form. Each insight shapes the mind that shaped it.</p>
     </main>
-    <footer>Perpetual Work In Progress</footer>
+
+    <div id="footer"></div>
+
+    <script>
+        function loadInclude(id, file) {
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => document.getElementById(id).innerHTML = data)
+                .catch(error => console.error('Error loading include:', error));
+        }
+
+        loadInclude("header", "/resources/html/header.html");
+        loadInclude("footer", "/resources/html/footer.html");
+    </script>
 </body>
 </html>

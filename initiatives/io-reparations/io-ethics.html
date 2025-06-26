@@ -1,18 +1,16 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Why ".io" Means More Than You Think</title>
-    <link rel="icon" type="image/x-icon" href="../../resources/images/favicon.ico">
-    <link rel="stylesheet" href="../../resources/css/style.css">
+    <title>Stolen Aletheia</title>
+    <link rel="icon" type="image/x-icon" href="/resources/images/favicon.ico">
+    <link rel="stylesheet" href="/resources/css/style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="../../index.html">Home</a>
-        </nav>
-    </header>
+    <div id="header"></div>
+
     <main>
         <h1>Why ".io" Means More Than You Think</h1>
         <p>Most tech-savvy folks recognize .io as a sleek domain suffix. It’s popular, punchy, and often signals a tech-forward product. It’s shorthand for input/output—clean, geeky, efficient.</p>
@@ -35,8 +33,24 @@
         <p>That final link is from 2014. <em>This is not a new revelation. It has only gone unheard by the masses.</em></p>
         <p><strong>Let’s be loud about it, now.</strong></p>
     </main>
-    <footer>
-        Perpetual Work In Progress
-    </footer>
+
+    <div id="footer"></div>
+
+    <script>
+        function loadInclude(id, file) {
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => document.getElementById(id).innerHTML = data)
+                .catch(error => console.error('Error loading include:', error));
+        }
+
+        loadInclude("header", "/resources/html/header.html");
+        loadInclude("footer", "/resources/html/footer.html");
+    </script>
 </body>
 </html>
