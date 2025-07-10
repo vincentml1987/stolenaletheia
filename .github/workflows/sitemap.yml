@@ -1,6 +1,9 @@
 # .github/workflows/sitemap.yml
 name: Generate sitemap
 
+permissions:            
+  contents: write       #  default is read-only
+  
 on:
   push:
     branches: [main]        # or 'master'
