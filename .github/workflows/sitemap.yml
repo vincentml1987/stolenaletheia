@@ -1,13 +1,12 @@
-# .github/workflows/sitemap.yml
 name: Generate sitemap
 
-permissions:            
-  contents: write       #  default is read-only
-  
 on:
   push:
-    branches: [main]        # or 'master'
-  workflow_dispatch:        # lets you run it manually from the Actions tab
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write          # lets the bot push back
 
 jobs:
   build:
@@ -17,17 +16,15 @@ jobs:
 
       - uses: cicirello/generate-sitemap@v1
         with:
-          path: .                         # repo root
-          base_url: https://stolenaletheia.io
-          sitemap_format: xml             # or txt
-          include_pdf: true               # optional
-          process_lastmod: true           # use commit date for <lastmod>
+          path-to-root: .                         # root of your Pages site
+          base-url-path: https://stolenaletheia.io
+          sitemap-format: xml
+          include-pdf: true                       # optional
 
-      # auto-commit updated sitemap.xml back to main
       - name: Commit sitemap
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add sitemap.xml
           if git diff --cached --quiet; then
             echo "No changes"
