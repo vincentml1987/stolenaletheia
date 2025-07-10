@@ -1,0 +1,34 @@
+# .github/workflows/sitemap.yml
+name: Generate sitemap
+
+on:
+  push:
+    branches: [main]        # or 'master'
+  workflow_dispatch:        # lets you run it manually from the Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cicirello/generate-sitemap@v1
+        with:
+          path: .                         # repo root
+          base_url: https://stolenaletheia.io
+          sitemap_format: xml             # or txt
+          include_pdf: true               # optional
+          process_lastmod: true           # use commit date for <lastmod>
+
+      # auto-commit updated sitemap.xml back to main
+      - name: Commit sitemap
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sitemap.xml
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore: update sitemap [skip ci]"
+            git push
+          fi
