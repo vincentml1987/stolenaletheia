@@ -1,0 +1,46 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stolen Aletheia</title>
+    <link rel="icon" type="image/x-icon" href="/resources/images/favicon.ico">
+    <link rel="stylesheet" href="/resources/css/style.css">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main>
+        <h1>Site Updates</h1>
+        <p>A running list of changes to this site. Newest first.</p>
+
+        <h2>2026-08-29</h2>
+        <ul>
+            <li>This page. Site Updates exists so changes here are visible, not just made.</li>
+            <li>Removed Unfolding's Chamber and the ".io Stance" links from the main navigation. Both pages are unchanged and still live at their original addresses - archived, not deleted. Unfolding's Chamber already carries its own archival note explaining the move away from ChatGPT.</li>
+            <li>Removed the "Truth was stolen. We're taking it back." tagline from the header.</li>
+            <li>Removed the Discord link from the footer - the server no longer exists.</li>
+        </ul>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        function loadInclude(id, file) {
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => document.getElementById(id).innerHTML = data)
+                .catch(error => console.error('Error loading include:', error));
+        }
+
+        loadInclude("header", "/resources/html/header.html");
+        loadInclude("footer", "/resources/html/footer.html");
+    </script>
+</body>
+</html>
