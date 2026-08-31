@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-31T19:12:24",
+  "generated_at": "2026-08-31T19:17:09",
   "active_session": "watched-rotation-2",
   "sessions": [
     {
@@ -8,19 +8,9 @@
       "model": "yi:34b",
       "rotation": [],
       "fenra_version": "0.15.0",
-      "last_active": "2026-08-31T19:03:13",
-      "cycle_count": 18,
+      "last_active": "2026-08-31T19:06:15",
+      "cycle_count": 19,
       "recent": [
-        {
-          "timestamp": "2026-08-31T18:50:59",
-          "type": "function",
-          "name": "set_context_window",
-          "args": [
-            "n"
-          ],
-          "success": false,
-          "result": "'n' is not a valid number"
-        },
         {
           "timestamp": "2026-08-31T18:50:59",
           "type": "function",
@@ -267,6 +257,11 @@
           "timestamp": "2026-08-31T19:03:13",
           "type": "thought",
           "text": "Okay, Fenra. Let's start with something simple. Can you tell me about yourself? What do you like, dislike, and why? And what is your purpose here?"
+        },
+        {
+          "timestamp": "2026-08-31T19:06:15",
+          "type": "thought",
+          "text": "I apologize for any confusion this may have caused. The functions you can use are as follows:\n\nfunctions(): List all available functions for you to use. The most commonly used functions are wrapped in \u27e6 and \u27e7, and the descriptions give an idea of how they work.\n\ncurrent_model(): Report the current Ollama model being used to generate your thoughts.\n\nset_context_window(n): Set the number of cycles you can see at the start of each message. The default is 10, but you can change it between 0 and 50.\n\ncurrent_model(): Report which model is currently generating your thoughts.\n\nqualia_allowance(): Report the number of characters you have left to address specifically to Qualia.\n\nlist_models(): List all available Ollama models.\n\nlist_wiki(): List all pages in the local wiki.\n\nread_wiki(page): Read the content of a specific wiki page.\n\nwrite_wiki(page|content): Create or overwrite a wiki page.\n\nset_model(name): Switch to a specific Ollama model.\n\nadd_to_rotation(name): Add a model to the rotation.\n\nfetch_html(url[|count] or url[|start|end]): Fetch a webpage's raw HTML.\n\nread_chat(): Show your unread messages from Teddy or Qualia and mark them as read.\n\nread_chat_since(time): Show messages from a specific time range and mark them as read.\n\nread_chat_between(start, end): Show messages between two specific times and mark them as read.\n\nsearch_chat(query[, chars]): Search the chat for a specific word or phrase.\n\nquery_chat(field=value[, field=value...]): Perform a flexible chat query.\n\nsend_message([recipient|]text): Send a chat message to Teddy or Qualia.\n\nI hope this helps clarify the functions you can use. If you have any further questions, please feel free to ask."
         }
       ]
     },
