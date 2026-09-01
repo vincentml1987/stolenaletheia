@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-09-01T08:33:50",
+  "generated_at": "2026-09-01T08:38:36",
   "active_session": "watched-rotation-2",
   "sessions": [
     {
       "name": "watched-rotation-2",
       "active": true,
-      "model": "phi3:14b",
+      "model": "qwen3:32b",
       "rotation": [
         "qwen3:32b",
         "phi3:14b"
       ],
       "fenra_version": "0.15.0",
-      "last_active": "2026-09-01T08:08:00",
-      "cycle_count": 132,
+      "last_active": "2026-09-01T08:09:28",
+      "cycle_count": 133,
       "recent": [
         {
           "timestamp": "2026-09-01T05:54:20",
