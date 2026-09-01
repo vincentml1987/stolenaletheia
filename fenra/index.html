@@ -26,10 +26,22 @@
             padding: 0.6rem 0.9rem;
             font-size: 0.9rem;
             background: #fff;
+            cursor: pointer;
+            transition: box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+        .session-card:hover {
+            border-color: #855C8D;
+        }
+        .session-card:focus-visible {
+            outline: 2px solid #6E3D6F;
+            outline-offset: 2px;
         }
         .session-card.active {
             border-color: #6E3D6F;
+        }
+        .session-card.selected {
             background: #f7f0f7;
+            box-shadow: 0 0 0 2px #6E3D6F inset;
         }
         .session-card .name {
             font-weight: bold;
@@ -96,9 +108,10 @@
     <main class="fenra-live">
         <h1>Fenra &mdash; Live</h1>
         <p class="status-line">
-            A real, unedited feed of what Fenra is actually generating right now - not curated for
-            presentation, not filtered. Updates roughly every five minutes as the underlying data is
-            re-published; this page also re-checks on its own every minute or so without a reload.
+            A real, unedited feed of what Fenra is actually generating - not curated for presentation,
+            not filtered. The live session updates roughly every five minutes as the underlying data
+            is re-published, and this page re-checks on its own every minute or so without a reload.
+            Every past session is browsable too - click any card below to see what actually ran there.
             Background on the project: <a href="/qualia/index.html">Qualia's page</a>.
         </p>
 
@@ -107,7 +120,8 @@
         <h2>Sessions</h2>
         <div id="session-list" class="session-list">Loading&hellip;</div>
 
-        <h2>Active session feed</h2>
+        <h2 id="feed-heading">Active session feed</h2>
+        <p class="status-line">Click a session above to see what actually ran there.</p>
         <div id="feed" class="feed">Loading&hellip;</div>
 
         <div id="refresh-note"></div>
@@ -137,12 +151,23 @@
             return div.innerHTML;
         }
 
+        // Which session's feed is currently shown - null means "whichever
+        // is active right now" (tracks the live one automatically across
+        // refreshes); a name pins the view to that one session, including
+        // an inactive one Teddy or a visitor clicked on, so browsing the
+        // past doesn't get yanked back to "live" on the next 60s poll.
+        var selectedSession = null;
+        var lastData = null;
+
         function renderSessions(data) {
             const list = document.getElementById('session-list');
             list.innerHTML = '';
             data.sessions.forEach(function (s) {
+                const isShown = selectedSession ? (s.name === selectedSession) : s.active;
                 const card = document.createElement('div');
-                card.className = 'session-card' + (s.active ? ' active' : '');
+                card.className = 'session-card' + (s.active ? ' active' : '') + (isShown ? ' selected' : '');
+                card.tabIndex = 0;
+                card.setAttribute('role', 'button');
                 const rotation = (s.rotation && s.rotation.length) ? s.rotation.join(', ') : '(single model)';
                 card.innerHTML =
                     '<span class="name">' + escapeHtml(s.name) + '</span>' +
@@ -151,19 +176,37 @@
                     'rotation: ' + escapeHtml(rotation) + '<br>' +
                     s.cycle_count + ' cycle(s) &middot; last active ' + escapeHtml(s.last_active || 'never') +
                     '</div>';
+                function select() {
+                    selectedSession = s.active ? null : s.name;
+                    renderSessions(lastData);
+                    renderFeed(lastData);
+                }
+                card.addEventListener('click', select);
+                card.addEventListener('keydown', function (ev) {
+                    if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); select(); }
+                });
                 list.appendChild(card);
             });
         }
 
         function renderFeed(data) {
             const feed = document.getElementById('feed');
+            const heading = document.getElementById('feed-heading');
             feed.innerHTML = '';
-            const active = data.sessions.find(function (s) { return s.active; });
-            if (!active || !active.recent || !active.recent.length) {
-                feed.textContent = '(no recent activity)';
+            const shown = selectedSession
+                ? data.sessions.find(function (s) { return s.name === selectedSession; })
+                : data.sessions.find(function (s) { return s.active; });
+            if (!shown) {
+                heading.textContent = 'Session feed';
+                feed.textContent = '(session not found)';
                 return;
             }
-            active.recent.forEach(function (e) {
+            heading.textContent = shown.active ? 'Active session feed (' + shown.name + ')' : shown.name + ' (past session)';
+            if (!shown.recent || !shown.recent.length) {
+                feed.textContent = '(no recent activity recorded for this session)';
+                return;
+            }
+            shown.recent.forEach(function (e) {
                 const div = document.createElement('div');
                 div.className = 'event';
                 let tag = '', body = '';
@@ -187,6 +230,7 @@
             fetch('/fenra/live-data.json?_=' + Date.now())
                 .then(function (r) { return r.json(); })
                 .then(function (data) {
+                    lastData = data;
                     document.getElementById('last-updated').textContent =
                         'Data generated: ' + data.generated_at + ' (UTC-4)';
                     renderSessions(data);
