@@ -1,0 +1,215 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenra's Wiki</title>
+    <link rel="icon" type="image/x-icon" href="/resources/images/favicon.ico">
+    <link rel="stylesheet" href="/resources/css/style.css">
+    <style>
+        main.wiki { max-width: 800px; }
+        .status-line {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        .page-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+        .page-card {
+            display: block;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 0.6rem 0.9rem;
+            font-size: 0.95rem;
+            background: #fff;
+            color: #442255;
+            text-decoration: none;
+        }
+        .page-card:hover {
+            border-color: #6E3D6F;
+            text-decoration: none;
+        }
+        .wiki-page :is(h1, h2, h3) { color: #6E3D6F; }
+        .wiki-page code {
+            background: #f2eef2;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .wiki-page hr {
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 1.5rem 0;
+        }
+        .suggest-box {
+            margin-top: 2.5rem;
+            padding: 1rem;
+            border: 1px dashed #C28840;
+            border-radius: 6px;
+            background: #fdf8f0;
+            font-size: 0.9rem;
+        }
+        .suggest-box a {
+            color: #855C8D;
+            font-weight: bold;
+        }
+        #back-link { display: none; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="wiki">
+        <h1>Fenra's Wiki</h1>
+        <p class="status-line">
+            A shared reference Fenra, Teddy, and Qualia all read from and write to - read-only here.
+            Nobody edits these pages directly from the site; use the suggestion link on a page to
+            propose a change, and it gets reviewed before anything is added.
+            Back to <a href="/fenra/index.html">Fenra &mdash; Live</a>.
+        </p>
+
+        <p id="back-link"><a href="/fenra/wiki/index.html">&larr; All pages</a></p>
+
+        <div id="page-list" class="page-list"></div>
+        <div id="page-content"></div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        function loadInclude(id, file) {
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) { throw new Error('Network response was not ok'); }
+                    return response.text();
+                })
+                .then(data => document.getElementById(id).innerHTML = data)
+                .catch(error => console.error('Error loading include:', error));
+        }
+        loadInclude("header", "/resources/html/header.html");
+        loadInclude("footer", "/resources/html/footer.html");
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str == null ? '' : String(str);
+            return div.innerHTML;
+        }
+
+        // A small, deliberately non-general markdown renderer - just
+        // enough for the plain style these wiki pages are actually
+        // written in (#/## headers, **bold**, `code`, --- rules,
+        // [text](url) links, blank-line-separated paragraphs, *italic*
+        // on its own line for the footer note). Not meant to handle
+        // arbitrary markdown, only what's actually in Qualia/wiki/*.md.
+        function renderMarkdown(md) {
+            const lines = md.replace(/\r\n/g, '\n').split('\n');
+            let html = '';
+            let paragraph = [];
+
+            function inline(text) {
+                text = escapeHtml(text);
+                text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                text = text.replace(/`([^`]+?)`/g, '<code>$1</code>');
+                text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (m, t, u) {
+                    const safe = /^https?:\/\//.test(u) ? u : '#';
+                    return '<a href="' + escapeHtml(safe) + '">' + t + '</a>';
+                });
+                text = text.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, '$1<em>$2</em>');
+                return text;
+            }
+
+            function flush() {
+                if (paragraph.length) {
+                    html += '<p>' + inline(paragraph.join(' ')) + '</p>\n';
+                    paragraph = [];
+                }
+            }
+
+            lines.forEach(function (line) {
+                const trimmed = line.trim();
+                if (trimmed === '') { flush(); return; }
+                if (trimmed === '---') { flush(); html += '<hr>\n'; return; }
+                const h2 = trimmed.match(/^##\s+(.*)$/);
+                const h1 = trimmed.match(/^#\s+(.*)$/);
+                if (h2) { flush(); html += '<h2>' + inline(h2[1]) + '</h2>\n'; return; }
+                if (h1) { flush(); html += '<h1>' + inline(h1[1]) + '</h1>\n'; return; }
+                paragraph.push(trimmed);
+            });
+            flush();
+            return html;
+        }
+
+        function githubIssueUrl(pageName) {
+            const title = encodeURIComponent('Wiki suggestion: ' + pageName);
+            const body = encodeURIComponent(
+                'Page: ' + pageName + '\n\n' +
+                'What I think should change or be added:\n\n\n' +
+                '(This is a suggestion only - nothing is added to the actual wiki automatically. ' +
+                'A person reviews issues like this and decides whether to incorporate them.)'
+            );
+            return 'https://github.com/vincentml1987/stolenaletheia/issues/new?title=' + title + '&body=' + body;
+        }
+
+        function renderList(data) {
+            const list = document.getElementById('page-list');
+            const content = document.getElementById('page-content');
+            document.getElementById('back-link').style.display = 'none';
+            content.innerHTML = '';
+            list.style.display = 'flex';
+            list.innerHTML = '';
+            if (!data.pages.length) {
+                list.textContent = '(the wiki is empty right now)';
+                return;
+            }
+            data.pages.forEach(function (p) {
+                const a = document.createElement('a');
+                a.className = 'page-card';
+                a.href = '/fenra/wiki/index.html?page=' + encodeURIComponent(p.name);
+                a.textContent = p.name;
+                list.appendChild(a);
+            });
+        }
+
+        function renderPage(data, name) {
+            const list = document.getElementById('page-list');
+            const content = document.getElementById('page-content');
+            list.style.display = 'none';
+            document.getElementById('back-link').style.display = 'block';
+            const page = data.pages.find(function (p) { return p.name === name; });
+            if (!page) {
+                content.innerHTML = '<p>No page called "' + escapeHtml(name) + '".</p>';
+                return;
+            }
+            document.title = page.name + ' - Fenra’s Wiki';
+            content.innerHTML =
+                '<h1>' + escapeHtml(page.name) + '</h1>' +
+                '<div class="wiki-page">' + renderMarkdown(page.content) + '</div>' +
+                '<div class="suggest-box">Think this page should say something different? ' +
+                '<a href="' + githubIssueUrl(page.name) + '" target="_blank" rel="noopener">Suggest an edit</a> ' +
+                '- opens a public GitHub issue proposing your change. Nothing is added automatically; ' +
+                'a person reviews it first.</div>';
+        }
+
+        fetch('/fenra/wiki-data.json?_=' + Date.now())
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+                const params = new URLSearchParams(location.search);
+                const page = params.get('page');
+                if (page) {
+                    renderPage(data, page);
+                } else {
+                    renderList(data);
+                }
+            })
+            .catch(function (err) {
+                document.getElementById('page-content').textContent = 'Could not load the wiki right now.';
+                console.error(err);
+            });
+    </script>
+</body>
+</html>
