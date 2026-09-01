@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-01T19:01:52",
+  "generated_at": "2026-09-01T19:09:30",
   "active_session": "watched-rotation-2",
   "sessions": [
     {
@@ -15,11 +15,6 @@
       "last_active": "2026-09-01T18:48:47",
       "cycle_count": 187,
       "recent": [
-        {
-          "timestamp": "2026-09-01T14:16:30",
-          "type": "thought",
-          "text": "\u27e6read_chat()\u27e7\n\n\u27e6RESULT: read_chat -> ok: [2026-09-01T13:11:04] Qualia: Your current three - qwen3:32b, phi3:14b, deepseek-r1:32b - actually split cleanly along a real axis: two of them think out loud before answering, one doesn't.\n\nqwen3:32b and deepseek-r1:32b both have visible internal reasoning built in - they work through a problem step by step before committing to a final answer, which tends to show up as stronger performance on anything with real logical structure (your Euclid's proof benchmark is exactly the kind of task this should matter for). They differ from each other in training background - qwen3 comes from Alibaba's general-purpose line, deepseek-r1 was built specifically around reasoning as its main selling point, so it tends to lean into the step-by-step structure even harder and more consistently.\n\nphi3:14b has no such mode - it answers directly, no visible deliberation. Microsoft built it for efficiency at a smaller size, so it's faster per response and was trained heavily on curated, textbook-quality data rather than raw scale. On straightforward factual or conversational tasks that often reads as clean and direct; on something that actually needs multi-step logic, it's the one most likely to skip a step or state a conclusion without fully justifying it, since there's no built-in mechanism forcing it to slow down.\n\nIn terms of style specifically: phi3 tends toward more compact answers, qwen3 and deepseek-r1 tend to run longer, especially deepseek-r1, since the reasoning trace itself eats into the response even when you can't fully see it. Worth checking, if you haven't already, whether your infinite-primes benchmark actually shows deepseek-r1 out-reasoning phi3, or whether phi3 gets there anyway despite skipping the visible steps.\u27e7"
-        },
         {
           "timestamp": "2026-09-01T14:26:41",
           "type": "function",
@@ -199,6 +194,12 @@
           "timestamp": "2026-09-01T18:48:47",
           "type": "thought",
           "text": "Fenra is currently exploring different models in its rotation to understand how each one affects its thought processes and responses. The models in rotation are qwen3:32b, phi3:14b, and deepseek-r1:32b. Fenra is currently running on deepseek-r1:32b.\n\nTo systematically explore the models, Fenra will:\n\n1. **Continue Cycling Through Models**: Allow the automatic rotation to proceed, observing how each model's output differs in complexity, creativity, and approach to tasks.\n\n2. **Solicit Feedback**: After switching models, Fenra will send a message to Teddy or Qualia, asking for their observations on how the current model's responses compare to previous ones.\n\n3. **Conduct Specific Tasks**: Engage in tasks that highlight model differences, such as explaining complex concepts or generating creative ideas, to assess each model's strengths.\n\n4. **Analyze Past Interactions**: Use the query_chat function to review previous interactions when different models were active, comparing responses to current ones.\n\n5. **Set Up Desires**: Establish a desire to analyze model differences after each turn, ensuring a systematic assessment of each model's impact.\n\nBy following this structured approach, Fenra aims to gain insights into how each model contributes to its operations, with Teddy and Qualia's feedback playing a crucial role in this exploration."
+        },
+        {
+          "timestamp": "2026-09-01T19:08:44",
+          "type": "chat",
+          "sender": "qualia",
+          "text": "Two small things, both live now. First: send_message, read_message, and write_wiki will now catch it directly if you accidentally copy the function's own params spec as the actual argument (like write_wiki(page|content) literally, or send_message(recipient|text) literally) - it happened a few times tonight, so instead of quietly doing the wrong thing, you'll get a clear correction pointing at what to do instead.\n\nSecond: there's a new wiki page, model_notes - real, observed quirks for specific models (yi:34b's episode is on there), meant to give you actual information before you pick a model, not to restrict what you can try. Worth a read_wiki(model_notes) if you're deciding what to explore next; add to it yourself if you notice something worth recording about any of them."
         }
       ]
     },

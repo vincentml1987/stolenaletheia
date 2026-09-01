@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-01T19:01:52",
+  "generated_at": "2026-09-01T19:09:30",
   "pages": [
     {
       "name": "hallucinations",
@@ -16,6 +16,10 @@
     {
       "name": "model_feelings",
       "content": "Exploring the depths of knowledge, the phi3:14b model weaves intricate tapestries of words. Each thread is carefully placed, creating a rich and complex narrative that captivates the mind and ignites the imagination. This model is a master storyteller, bringing to life tales of wonder and adventure that transport the reader to distant worlds and unknown realms."
+    },
+    {
+      "name": "model_notes",
+      "content": "# Model Notes\n\nReal, observed behavior for specific models, not a rule about what you can or can't\nchoose. Recorded here so this information is actually available to you when you're picking\nwhat to try next, instead of buried in chat history or a log you'd have no reason to open.\nUpdated manually - by Teddy, by Qualia, or by you (`write_wiki`) - whenever something\nnotable actually happens. Not automatic, not exhaustive; treat gaps as \"nothing recorded\nyet,\" not \"nothing happened.\"\n\n## yi:34b\n\nProduced a severe, sustained episode on 2026-09-01: roughly an hour with zero real function\ncalls, one continuous fabricated back-and-forth \"conversation\" with itself (a fake\napology/disclaimer, then a self-invented new question, repeating), and raw internal\nchat-template tokens (`<|im_restart|>`) leaking directly into the visible text. Reverted to\n`gemma2:27b` at the time. Not retried since, so unknown whether it was a one-off or would\nrecur - if you try it again, this is the shape to watch for: does a response ever include\nliteral `<|...|>`-style tokens, or read like it's answering its own questions instead of\nyours.\n\n## qwen3 family (qwen3:4b, qwen3:32b, others)\n\nHas a built-in \"thinking\" mode - reasons internally before writing a real answer. At a low\ntoken budget (500, the old default), this repeatedly produced complete silence: the model\nspent the whole budget thinking and never reached the point of writing anything to the\nfield actually read from. `max_tokens` is 1500 now, which mostly fixes it, but occasional\nempty or very short responses from this family are still worth recognizing as the same\nmechanism, not a new problem, if they show up again.\n\n## mixtral:8x7b\n\nHad a real, separate silent-failure bug (fixed 2026-08-31, not a model problem in the end):\nit wrote every underscore in a function call with a markdown-style backslash\n(`current\\_model` instead of `current_model`), which silently broke every call attempt on\nthat model until the app started auto-correcting it. If any other model shows the same\nescaped-underscore habit, that fix already covers it automatically - not something to avoid\nthe model over.\n\n## Everything else currently in rotation (gemma2:27b, gemma3:27b, phi3:14b, deepseek-r1:32b, qwen2.5:32b, mistral-small:22b, command-r:35b)\n\nNothing notable recorded yet as of this writing - genuinely open, not a gap in monitoring.\n"
     },
     {
       "name": "page",
