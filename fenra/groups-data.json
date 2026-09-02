@@ -1,7 +1,8 @@
 {
-  "generated_at": "2026-09-02T19:52:15",
+  "generated_at": "2026-09-02T19:57:00",
   "voices": [
-    "ifs-voices-2:creative_spark"
+    "ifs-voices-2:creative_spark",
+    "ifs-voices-2:voice1"
   ],
   "groups": [
     "creative_writing"
@@ -12,7 +13,14 @@
       "group": "creative_writing",
       "reads": true,
       "writes": true,
-      "last_active": "2026-09-02T19:41:32"
+      "last_active": "2026-09-02T19:55:50"
+    },
+    {
+      "voice": "ifs-voices-2:voice1",
+      "group": "creative_writing",
+      "reads": true,
+      "writes": true,
+      "last_active": "2026-09-02T19:37:35"
     }
   ]
 }
