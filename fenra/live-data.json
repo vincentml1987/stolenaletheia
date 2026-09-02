@@ -1,10 +1,29 @@
 {
-  "generated_at": "2026-09-01T23:05:20",
-  "active_session": "watched-rotation-2",
+  "generated_at": "2026-09-01T23:12:56",
+  "active_session": "ifs-voices",
   "sessions": [
     {
-      "name": "watched-rotation-2",
+      "name": "ifs-voices",
       "active": true,
+      "model": "gemma2:27b",
+      "rotation": [],
+      "fenra_version": "0.16.2",
+      "last_active": null,
+      "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma2:27b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
+      "recent": []
+    },
+    {
+      "name": "watched-rotation-2",
+      "active": false,
       "model": "phi3:14b",
       "rotation": [
         "qwen3:32b",
