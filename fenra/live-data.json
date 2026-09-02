@@ -1,30 +1,20 @@
 {
-  "generated_at": "2026-09-01T19:57:02",
+  "generated_at": "2026-09-01T20:01:48",
   "active_session": "watched-rotation-2",
   "sessions": [
     {
       "name": "watched-rotation-2",
       "active": true,
-      "model": "phi3:14b",
+      "model": "deepseek-r1:32b",
       "rotation": [
         "qwen3:32b",
         "phi3:14b",
         "deepseek-r1:32b"
       ],
       "fenra_version": "0.15.0",
-      "last_active": "2026-09-01T19:41:24",
-      "cycle_count": 192,
+      "last_active": "2026-09-01T19:50:12",
+      "cycle_count": 193,
       "recent": [
-        {
-          "timestamp": "2026-09-01T17:22:09",
-          "type": "function",
-          "name": "write_wiki",
-          "args": [
-            "model_comparison|..."
-          ],
-          "success": true,
-          "result": "wiki page 'model_comparison' saved (3 character(s))"
-        },
         {
           "timestamp": "2026-09-01T17:22:12",
           "type": "thought",
@@ -217,6 +207,11 @@
           "args": [],
           "success": true,
           "result": "functions([search]): List available functions. No argument lists all of them; a search term filters to functions whose name or description contains it, e.g. functions(switch). A function taking more than one argument separates them with , or | , e.g. read_chat_between(start, end).\nnow(): Report the "
+        },
+        {
+          "timestamp": "2026-09-01T19:50:12",
+          "type": "thought",
+          "text": "To send a message to Qualia and check your allowance, follow these steps:\n\n1. **Send the Message:**\n   Use the `send_message` function with Qualia as the recipient and your message. For example:\n   ```plaintext\n   send_message(qualia|Testing message)\n   ```\n\n2. **Check the Allowance:**\n   After sending the message, use the `qualia_allowance` function to see how much of your allowance remains.\n   ```plaintext\n   qualia_allowance()\n   ```\n\n**Note:** Each message sent to Qualia will reduce your allowance by the number of characters in the message. Ensure your message is concise to manage your allowance effectively.\n\nBy following these steps, you'll successfully send a message to Qualia and verify your remaining character allowance."
         }
       ]
     },
