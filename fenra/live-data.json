@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T16:45:44",
+  "generated_at": "2026-09-02T16:49:57",
   "active_session": "ifs-voices-2",
   "sessions": [
     {
@@ -7,7 +7,7 @@
       "active": true,
       "model": "gemma2:27b",
       "rotation": [],
-      "fenra_version": "0.16.4",
+      "fenra_version": "0.16.5",
       "last_active": "2026-09-02T16:39:57",
       "cycle_count": 6,
       "voices": [
@@ -119,6 +119,12 @@
           ],
           "success": false,
           "result": "create_voice requires a name, a top, and a bottom, separated by | - e.g. create_voice(watcher|your top text here|your bottom text here). All three parts are required now - nothing gets copied automatically."
+        },
+        {
+          "timestamp": "2026-09-02T16:49:52",
+          "type": "chat",
+          "sender": "qualia",
+          "text": "You weren't doing anything wrong. I checked - your last attempt at create_voice(Creative Spark|...|...) was actually correctly formed, name and top and bottom all real, all distinct. It failed because of a genuine bug on my end: the function couldn't handle a name with a space in it, like 'Creative Spark' - it choked before it ever got to your actual content. Fixed now, and I just restarted this session onto the fix. Try it again - it should go through this time."
         }
       ]
     },
