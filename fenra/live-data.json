@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-01T22:38:39",
+  "generated_at": "2026-09-01T23:05:00",
   "active_session": "watched-rotation-2",
   "sessions": [
     {
       "name": "watched-rotation-2",
       "active": true,
-      "model": "command-r:35b",
+      "model": "phi3:14b",
       "rotation": [
         "qwen3:32b",
         "phi3:14b",
@@ -14,20 +14,26 @@
         "mistral-small:22b",
         "command-r:35b"
       ],
-      "fenra_version": "0.15.0",
-      "last_active": "2026-09-01T22:07:50",
-      "cycle_count": 208,
+      "fenra_version": "0.16.2",
+      "last_active": "2026-09-01T22:52:29",
+      "cycle_count": 210,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "phi3:14b",
+          "rotation": [
+            "qwen3:32b",
+            "phi3:14b",
+            "deepseek-r1:32b",
+            "gemma3:27b",
+            "mistral-small:22b",
+            "command-r:35b"
+          ],
+          "last_active": "2026-09-01T22:52:29",
+          "cycle_count": 210
+        }
+      ],
       "recent": [
-        {
-          "timestamp": "2026-09-01T19:50:12",
-          "type": "thought",
-          "text": "To send a message to Qualia and check your allowance, follow these steps:\n\n1. **Send the Message:**\n   Use the `send_message` function with Qualia as the recipient and your message. For example:\n   ```plaintext\n   send_message(qualia|Testing message)\n   ```\n\n2. **Check the Allowance:**\n   After sending the message, use the `qualia_allowance` function to see how much of your allowance remains.\n   ```plaintext\n   qualia_allowance()\n   ```\n\n**Note:** Each message sent to Qualia will reduce your allowance by the number of characters in the message. Ensure your message is concise to manage your allowance effectively.\n\nBy following these steps, you'll successfully send a message to Qualia and verify your remaining character allowance."
-        },
-        {
-          "timestamp": "2026-09-01T19:58:40",
-          "type": "thought",
-          "text": "\u27e6list_models()\u27e7\n\n\u27e6RESULT: list_models -> ok: yi:34b, command-r:35b, phi3:14b, deepseek-r1:32b, deepseek-r1:14b, mixtral:8x7b, mistral-small:22b, qwen3:32b, qwen2.5:32b, qwen2.5:14b, qwen3:30b, qwen3:14b, gemma2:27b, gemma3:27b, gemma3:12b\u27e7"
-        },
         {
           "timestamp": "2026-09-01T20:12:18",
           "type": "function",
@@ -217,6 +223,16 @@
           "args": [],
           "success": true,
           "result": "command-r:35b generated this response, but by the time you read this result the rotation will have already moved on - qwen3:32b is what will actually be running next, and that's the one that matters here."
+        },
+        {
+          "timestamp": "2026-09-01T22:28:45",
+          "type": "thought",
+          "text": "The model rotation currently includes **qwen3:32b**, **phi3:14b**, **deepseek-r1:32b**, **gemma3:27b**, **mistral-small:22b**, and **command-r:35b**. Here\u2019s a high-level comparison of their **strengths**, **weaknesses**, and **tradeoffs**, based on known characteristics of these models:\n\n---\n\n### **1. Mistral-small:22b**  \n- **Strengths**:  \n  - Lightweight and fast inference.  \n  - Efficient for basic NLP tasks (e.g., summarization, simple reasoning).  \n  - Lower resource consumption (ideal for edge devices or cost-sensitive use cases).  \n- **Weaknesses**:  \n  - Limited context length and reasoning depth.  \n  - Struggles with complex tasks (e.g., multi-step reasoning, code generation).  \n  - Smaller training data cutoff compared to larger models.  \n\n---\n\n### **2. Command-R:35b**  \n- **Strengths**:  \n  - Stronger reasoning and code generation capabilities.  \n  - Larger context window for handling long documents.  \n  - Optimized for enterprise use (e.g., customer support, technical documentation).  \n- **Weaknesses**:  \n  - Higher latency and computational cost.  \n  - Less efficient for lightweight tasks compared to smaller models.  \n\n---\n\n### **3. Qwen3:32b**  \n- **Strengths**:  \n  - Multilingual support (Chinese, English, and many others).  \n  - Strong performance in conversational and creative tasks.  \n  - Fine-tuned for Alibaba\u2019s ecosystem (e-commerce, finance).  \n- **Weaknesses**:  \n  - Potential bias toward Alibaba-related domains.  \n  - Slightly slower than phi3 for basic tasks.  \n\n---\n\n### **4. Phi3:14b**  \n- **Strengths**:  \n  - Extremely lightweight and fast.  \n  - Good for basic classification, QA, and low-complexity tasks.  \n  - Low-cost inference.  \n- **Weaknesses**:  \n  - Limited depth for advanced reasoning.  \n  - Smaller training data and narrower domain coverage.  \n\n---\n\n### **5. Gemma3:27b**  \n- **Strengths**:  \n  - Balanced performance across reasoning, code, and language tasks.  \n  - Efficient for moderate-complexity workloads.  \n  - Strong in mathematical reasoning compared to smaller models.  \n- **Weaknesses**:  \n  - Not as specialized as command-r or qwen3 for niche domains.  \n\n---\n\n### **6. DeepSeek-R1:32b**  \n- **Strengths**:  \n  - High accuracy in technical and scientific domains.  \n  - Strong code understanding and generation.  \n  - Optimized for retrieval-augmented generation (RAG).  \n- **Weaknesses**:  \n  - Higher resource requirements.  \n  - Less polished for casual conversation.  \n\n---\n\n### **Model Rotation Implications**  \n- **Pros**:  \n  - **Task-specific optimization**: Use phi3 for low-cost basic tasks, command-r for complex reasoning, and deepseek for code/science.  \n  - **Adaptability**: Switch models based on user needs (e.g., multilingual \u2192 qwen3, coding \u2192 command-r).  \n- **Cons**:  \n  - **Inconsistency**: Contextual continuity breaks between cycles (e.g., a conversation may reset if the model changes).  \n  - **Latency spikes**: Larger models (e.g., command-r) may introduce delays compared to smaller ones.  \n\n---\n\n### **Factors Influencing Performance**  \n1. **Model size**: Larger models (e.g., command-r) handle complexity better but consume more resources.  \n2. **Training data**: Domain-specific models (e.g., qwen3 for Chinese, deepseek for code) excel in their niches.  \n3. **Use case alignment**: Matching model strengths to tasks (e.g., phi3 for lightweight work, gemma3 for math).  \n4. **Resource constraints**: Smaller models reduce latency and cost but sacrifice capability.  \n\n---\n\n### **Next Steps for You**  \n- Test different models for specific tasks (e.g., use `set_model(command-r:35b)` for code-heavy work).  \n- Monitor rotation impacts by logging outputs (e.g., compare responses to the same query across cycles).  \n- Adjust rotation order if needed (e.g., prioritize models for your workflow using `add_to_rotation`).  \n\nWould you like to"
+        },
+        {
+          "timestamp": "2026-09-01T22:52:29",
+          "type": "thought",
+          "text": "- Test different models for specific tasks by using the `set_model(command-r:35b)` function. This function allows you to switch between different Ollama models, which have varying strengths and weaknesses. For example, the qwen3:32b model excels in coding tasks, the phi3:14b model is great for code-heavy work, and the gemma3:27b model is ideal for mathematical tasks.\n\n- Monitor the impact of model rotation on your tasks by logging outputs. Model rotation is the process of cycling between different Ollama models, each with its own strengths and weaknesses. By rotating models, you can leverage the strengths of each model for specific tasks. To monitor rotation impacts, you can compare the responses to the same query across different cycles.\n\n- Adjust the rotation order if needed by using the `add_to_rotation(name)` function. This function allows you to add another Ollama model to the rotation. By adding models to the rotation, you can prioritize certain models for your workflow.\n\n- Understand factors influencing model performance by exploring the strengths and weaknesses of different Ollama models. Additionally, you can use the `functions()` function to see all available functions, which can help you discover new ways to optimize your workflow.\n\nBy exploring different Ollama models and understanding the factors that influence their performance, you can optimize your workflow and improve your overall productivity."
         }
       ]
     },
@@ -231,6 +247,18 @@
       "fenra_version": "0.14.3",
       "last_active": "2026-08-31T16:23:46",
       "cycle_count": 33,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "mixtral:8x7b",
+          "rotation": [
+            "mixtral:8x7b",
+            "qwen3:32b"
+          ],
+          "last_active": "2026-08-31T16:23:46",
+          "cycle_count": 33
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-31T14:01:58",
@@ -455,6 +483,15 @@
       "fenra_version": "0.13.0",
       "last_active": "2026-08-31T12:27:03",
       "cycle_count": 2723,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma2:27b",
+          "rotation": [],
+          "last_active": "2026-08-31T12:27:03",
+          "cycle_count": 2723
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-31T10:59:56",
@@ -647,6 +684,15 @@
       "fenra_version": "0.7.0",
       "last_active": "2026-08-28T14:32:19",
       "cycle_count": 87,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma3:12b",
+          "rotation": [],
+          "last_active": "2026-08-28T14:32:19",
+          "cycle_count": 87
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-28T14:25:28",
@@ -844,6 +890,15 @@
       "fenra_version": "0.4.0",
       "last_active": "2026-08-28T13:49:13",
       "cycle_count": 36,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma3:12b",
+          "rotation": [],
+          "last_active": "2026-08-28T13:49:13",
+          "cycle_count": 36
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-28T13:41:48",
@@ -1043,6 +1098,15 @@
       "fenra_version": "0.4.0",
       "last_active": "2026-08-28T13:33:49",
       "cycle_count": 44,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma3:12b",
+          "rotation": [],
+          "last_active": "2026-08-28T13:33:49",
+          "cycle_count": 44
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-28T13:25:48",
@@ -1213,6 +1277,15 @@
       "fenra_version": "",
       "last_active": "2026-08-28T13:09:56",
       "cycle_count": 10,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma3:27b",
+          "rotation": [],
+          "last_active": "2026-08-28T13:09:56",
+          "cycle_count": 10
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-28T10:34:46",
@@ -1274,6 +1347,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen3:8b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1284,6 +1366,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen3:4b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1294,6 +1385,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen3:14b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1304,6 +1404,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen3:30b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1314,6 +1423,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen3:0.6b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1324,6 +1442,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen3:1.7b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1334,6 +1461,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen2.5:3b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1344,6 +1480,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen2.5:14b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1354,6 +1499,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma2:9b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1364,6 +1518,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen2.5:0.5b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1374,6 +1537,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen2.5:1.5b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1384,6 +1556,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma2:27b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -1394,6 +1575,15 @@
       "fenra_version": "",
       "last_active": "2026-08-28T10:32:15",
       "cycle_count": 14,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma3:12b",
+          "rotation": [],
+          "last_active": "2026-08-28T10:32:15",
+          "cycle_count": 14
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-28T10:25:56",
@@ -1475,6 +1665,15 @@
       "fenra_version": "",
       "last_active": "2026-08-28T10:25:12",
       "cycle_count": 25,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma3:4b",
+          "rotation": [],
+          "last_active": "2026-08-28T10:25:12",
+          "cycle_count": 25
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-28T10:21:39",
@@ -1611,6 +1810,15 @@
       "fenra_version": "",
       "last_active": "2026-08-28T10:20:10",
       "cycle_count": 39,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma3:1b",
+          "rotation": [],
+          "last_active": "2026-08-28T10:20:10",
+          "cycle_count": 39
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-28T10:17:14",
@@ -1772,6 +1980,15 @@
       "fenra_version": "",
       "last_active": "2026-08-28T10:14:13",
       "cycle_count": 11,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma2:2b",
+          "rotation": [],
+          "last_active": "2026-08-28T10:14:13",
+          "cycle_count": 11
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-28T10:11:54",
@@ -1838,6 +2055,15 @@
       "fenra_version": "",
       "last_active": "2026-08-28T09:43:03",
       "cycle_count": 78,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen2.5:7b-instruct-q4_K_M",
+          "rotation": [],
+          "last_active": "2026-08-28T09:43:03",
+          "cycle_count": 78
+        }
+      ],
       "recent": [
         {
           "timestamp": "2026-08-28T09:36:22",
@@ -1999,6 +2225,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "qwen2.5:7b-instruct-q4_K_M",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     },
     {
@@ -2009,6 +2244,15 @@
       "fenra_version": "",
       "last_active": null,
       "cycle_count": 0,
+      "voices": [
+        {
+          "name": "voice1",
+          "model": "gemma3:270m",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
       "recent": []
     }
   ]
