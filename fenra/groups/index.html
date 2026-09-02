@@ -1,0 +1,223 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenra - Groups</title>
+    <link rel="icon" type="image/x-icon" href="/resources/images/favicon.ico">
+    <link rel="stylesheet" href="/resources/css/style.css">
+    <style>
+        main.fenra-groups { max-width: 900px; }
+        .status-line {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        .legend .swatch {
+            display: inline-block;
+            width: 1.1rem;
+            height: 0.35rem;
+            border-radius: 2px;
+            margin-right: 0.35rem;
+            vertical-align: middle;
+        }
+        #graph-wrap {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #fff;
+            overflow-x: auto;
+        }
+        #graph {
+            display: block;
+        }
+        .node rect {
+            stroke: #666;
+        }
+        .node text {
+            font-size: 12px;
+            fill: #333;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+        .edge-label {
+            font-size: 9px;
+            fill: #888;
+            text-anchor: middle;
+        }
+        #empty-note {
+            color: #888;
+            padding: 2rem;
+            text-align: center;
+        }
+        #refresh-note {
+            font-size: 0.8rem;
+            color: #999;
+            text-align: center;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="fenra-groups">
+        <h1>Fenra &mdash; Groups</h1>
+        <p class="status-line">
+            Which voices (independent Fenra sessions, each running on its own schedule - there's no
+            shared turn order) are in which groups right now, and when each one was actually last
+            heard from there. Republished roughly every five minutes alongside the
+            <a href="/fenra/index.html">live feed</a>; this page re-checks on its own every minute.
+        </p>
+
+        <div class="legend">
+            <span><span class="swatch" style="background:#4a7fb5"></span>reads a group</span>
+            <span><span class="swatch" style="background:#c07a2e"></span>writes a group</span>
+            <span><span class="swatch" style="background:#999"></span>reads and writes</span>
+        </div>
+
+        <div id="last-updated" class="status-line"></div>
+
+        <div id="graph-wrap">
+            <svg id="graph"></svg>
+            <div id="empty-note" hidden>No voices are in any groups right now.</div>
+        </div>
+
+        <div id="refresh-note"></div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        function loadInclude(id, file) {
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => document.getElementById(id).innerHTML = data)
+                .catch(error => console.error('Error loading include:', error));
+        }
+
+        loadInclude("header", "/resources/html/header.html");
+        loadInclude("footer", "/resources/html/footer.html");
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str == null ? '' : String(str);
+            return div.innerHTML;
+        }
+
+        const SVG_NS = "http://www.w3.org/2000/svg";
+        const NODE_W = 150, NODE_H = 32, MARGIN = 30, ROW_H = 60;
+
+        function el(tag, attrs, text) {
+            const node = document.createElementNS(SVG_NS, tag);
+            for (const k in attrs) node.setAttribute(k, attrs[k]);
+            if (text != null) node.textContent = text;
+            return node;
+        }
+
+        // Simple, deliberately non-force-directed layout: groups in a
+        // left column, voices in a right column, straight lines between
+        // connected pairs. Matches the local Topology tab in the app
+        // itself (fenra.py v0.16.1) - same data, same shape, just static
+        // SVG here instead of a live Tkinter canvas.
+        function renderGraph(data) {
+            const svg = document.getElementById('graph');
+            const emptyNote = document.getElementById('empty-note');
+            svg.innerHTML = '';
+
+            const groups = data.groups || [];
+            const voices = data.voices || [];
+            if (!groups.length && !voices.length) {
+                svg.setAttribute('width', 0);
+                svg.setAttribute('height', 0);
+                emptyNote.hidden = false;
+                return;
+            }
+            emptyNote.hidden = true;
+
+            const rows = Math.max(groups.length, voices.length, 1);
+            const height = MARGIN * 2 + rows * ROW_H;
+            const width = 640;
+            const leftX = MARGIN + NODE_W / 2;
+            const rightX = width - MARGIN - NODE_W / 2;
+
+            svg.setAttribute('width', width);
+            svg.setAttribute('height', height);
+            svg.setAttribute('viewBox', '0 0 ' + width + ' ' + height);
+
+            const groupY = {};
+            groups.forEach(function (g, i) {
+                groupY[g] = MARGIN + (height - 2 * MARGIN) / groups.length * (i + 0.5);
+            });
+            const voiceY = {};
+            voices.forEach(function (v, i) {
+                voiceY[v] = MARGIN + (height - 2 * MARGIN) / voices.length * (i + 0.5);
+            });
+
+            // Edges first, so node boxes draw on top of the lines.
+            (data.edges || []).forEach(function (e) {
+                if (!(e.group in groupY) || !(e.voice in voiceY)) return;
+                const gy = groupY[e.group], vy = voiceY[e.voice];
+                let color = '#4a7fb5';
+                if (e.reads && e.writes) color = '#999';
+                else if (e.writes) color = '#c07a2e';
+                const line = el('line', {
+                    x1: leftX + NODE_W / 2, y1: gy, x2: rightX - NODE_W / 2, y2: vy,
+                    stroke: color, 'stroke-width': 2,
+                });
+                svg.appendChild(line);
+                const label = e.last_active ? e.last_active.split('T').pop() : 'never heard from';
+                svg.appendChild(el('text', {
+                    class: 'edge-label', x: (leftX + rightX) / 2, y: (gy + vy) / 2 - 4,
+                }, label));
+            });
+
+            function drawNode(x, y, label, fill) {
+                const g = el('g', { class: 'node' });
+                g.appendChild(el('rect', {
+                    x: x - NODE_W / 2, y: y - NODE_H / 2, width: NODE_W, height: NODE_H,
+                    rx: 5, fill: fill,
+                }));
+                g.appendChild(el('text', { x: x, y: y }, label));
+                svg.appendChild(g);
+            }
+
+            groups.forEach(function (g) { drawNode(leftX, groupY[g], g, '#f0e6f5'); });
+            voices.forEach(function (v) { drawNode(rightX, voiceY[v], v, '#e6f0f5'); });
+        }
+
+        function loadData() {
+            fetch('/fenra/groups-data.json?_=' + Date.now())
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    document.getElementById('last-updated').textContent =
+                        'Data generated: ' + data.generated_at + ' (UTC-4)';
+                    renderGraph(data);
+                    document.getElementById('refresh-note').textContent =
+                        'Checking for new data every 60 seconds.';
+                })
+                .catch(function (err) {
+                    document.getElementById('refresh-note').textContent =
+                        'Could not load group data right now.';
+                    console.error(err);
+                });
+        }
+
+        loadData();
+        setInterval(loadData, 60000);
+    </script>
+</body>
+</html>
