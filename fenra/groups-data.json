@@ -1,6 +1,26 @@
 {
-  "generated_at": "2026-09-02T17:20:06",
-  "voices": [],
-  "groups": [],
-  "edges": []
+  "generated_at": "2026-09-02T17:24:49",
+  "voices": [
+    "ifs-voices-2:creative_spark",
+    "ifs-voices-2:voice1"
+  ],
+  "groups": [
+    "creative_writing"
+  ],
+  "edges": [
+    {
+      "voice": "ifs-voices-2:creative_spark",
+      "group": "creative_writing",
+      "reads": true,
+      "writes": true,
+      "last_active": null
+    },
+    {
+      "voice": "ifs-voices-2:voice1",
+      "group": "creative_writing",
+      "reads": true,
+      "writes": true,
+      "last_active": null
+    }
+  ]
 }
