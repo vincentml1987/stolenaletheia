@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T21:08:23",
+  "generated_at": "2026-09-02T21:13:08",
   "voices": [
     "ifs-voices-2:creative_spark"
   ],
@@ -12,7 +12,7 @@
       "group": "creative_writing",
       "reads": true,
       "writes": true,
-      "last_active": "2026-09-02T20:59:19"
+      "last_active": "2026-09-02T21:08:46"
     }
   ]
 }
