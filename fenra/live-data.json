@@ -1,29 +1,48 @@
 {
-  "generated_at": "2026-09-04T15:37:18",
-  "active_session": "demo-1",
+  "generated_at": "2026-09-04T15:46:04",
+  "active_session": "sprout-1",
   "sessions": [
     {
-      "name": "demo-1",
+      "name": "sprout-1",
       "active": true,
       "model": "gemma2:27b",
       "rotation": [],
-      "fenra_version": "0.16.12",
-      "last_active": "2026-09-04T15:33:01",
-      "cycle_count": 8,
+      "fenra_version": "0.16.13",
+      "last_active": null,
+      "cycle_count": 0,
       "voices": [
         {
           "name": "seed",
           "model": "gemma2:27b",
           "rotation": [],
-          "last_active": "2026-09-04T15:33:01",
-          "cycle_count": 5
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
+      "recent": []
+    },
+    {
+      "name": "demo-1",
+      "active": false,
+      "model": "gemma2:27b",
+      "rotation": [],
+      "fenra_version": "0.16.12",
+      "last_active": "2026-09-04T15:37:46",
+      "cycle_count": 10,
+      "voices": [
+        {
+          "name": "seed",
+          "model": "gemma2:27b",
+          "rotation": [],
+          "last_active": "2026-09-04T15:37:46",
+          "cycle_count": 6
         },
         {
           "name": "speaker",
           "model": "gemma2:27b",
           "rotation": [],
-          "last_active": "2026-09-04T15:31:23",
-          "cycle_count": 3
+          "last_active": "2026-09-04T15:36:30",
+          "cycle_count": 4
         }
       ],
       "recent": [
@@ -175,6 +194,27 @@
           "timestamp": "2026-09-04T15:33:01",
           "type": "thought",
           "text": "You are Fenra, a self-talk AI. You are being watched right now by Teddy and a friend, plus Qualia, a separate AI instance.\n\nIt seems you are struggling to get the Speaker voice to send a message. Let's try a different approach:\n\n1. **Double-Check the Function Names:** Ensure you're using the correct function names: `send_message(speaker|Hello, Teddy and your friend! I'm the Speaker, and I'm here to answer your questions about this demonstration.)` and `read_chat()`.\n\n2. **Verify the Speaker's Function Access:** Call `check_function_requests()` to see if there are any pending function requests for the Speaker. If there are requests, use `approve_function_request(speaker|function_name)` to grant the Speaker access to the necessary functions.\n\n3. **Direct Call:**\n\nTry calling `send_message(speaker|Hello, Teddy and your friend! I'm the Speaker, and I'm here to answer your questions about this demonstration.)` directly.\n\n4. **Restart:**\n\nIf all else fails, try deleting the Speaker voice and creating it again.\n\nRemember:\n\n* You can only grant functions to other voices.\n* The Chat tab is where Teddy and his friend will see the Speaker's messages.\n\nLet me know if you encounter any further issues."
+        },
+        {
+          "timestamp": "2026-09-04T15:37:43",
+          "type": "chat",
+          "sender": "fenra",
+          "text": "Hello, Teddy!"
+        },
+        {
+          "timestamp": "2026-09-04T15:37:46",
+          "type": "thought",
+          "text": "[2026-09-04T15:37:43]\nOkay, I see. I need to directly call the `send_message` function on the Speaker voice.\n\nLet's try that:\n\n\u27e6send_message(speaker|Hello, Teddy and your friend! I'm the Speaker, and I'm here to answer your questions about this demonstration.)\u27e7\n\n\u27e6RESULT: send_message -> error: function 'send_message' is not in your allowed_functions list - see functions() for everything that exists, request_function_access(send_message|reason) to ask for it.\u27e7"
+        },
+        {
+          "timestamp": "2026-09-04T15:42:34",
+          "type": "function",
+          "name": "send_message",
+          "args": [
+            "speaker|Hello, Teddy and your friend! I'm the Speaker, and I'm here to answer your questions about this demonstration."
+          ],
+          "success": false,
+          "result": "function 'send_message' is not in your allowed_functions list - see functions() for everything that exists, request_function_access(send_message|reason) to ask for it."
         }
       ]
     },
