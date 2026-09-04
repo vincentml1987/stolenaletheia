@@ -1,10 +1,72 @@
 {
-  "generated_at": "2026-09-04T15:00:09",
-  "active_session": "permissions-test-2",
+  "generated_at": "2026-09-04T15:13:34",
+  "active_session": "demo-1",
   "sessions": [
     {
-      "name": "permissions-test-2",
+      "name": "demo-1",
       "active": true,
+      "model": "gemma2:27b",
+      "rotation": [],
+      "fenra_version": "0.16.12",
+      "last_active": "2026-09-04T15:09:29",
+      "cycle_count": 1,
+      "voices": [
+        {
+          "name": "seed",
+          "model": "gemma2:27b",
+          "rotation": [],
+          "last_active": "2026-09-04T15:09:29",
+          "cycle_count": 1
+        },
+        {
+          "name": "speaker",
+          "model": "gemma2:27b",
+          "rotation": [],
+          "last_active": null,
+          "cycle_count": 0
+        }
+      ],
+      "recent": [
+        {
+          "timestamp": "2026-09-04T15:09:29",
+          "type": "thought",
+          "text": "\u27e6create_voice(speaker|I am the Speaker, here to answer questions and provide information for the demonstration.|To use send_message(text) to send a message to the chat and read_chat() to see what has been said.)\u27e7\n\n\u27e6grant_function_request(speaker|send_message)\u27e7\n\u27e6grant_function_request(speaker|read_chat)\u27e7\n\n\u27e6RESULT: create_voice -> ok: 'speaker' created with the top/bottom you wrote for it - your model, model rotation, and context window carried over, but its framing is exactly what you gave it, nothing more. Its own separate history starts now. It's in the rotation and will start getting its own turns soon (2 voice(s) total now).\u27e7\n\u27e6RESULT: grant_function_request -> ok: granted: 'speaker' can now call 'send_message'.\u27e7\n\u27e6RESULT: grant_function_request -> ok: granted: 'speaker' can now call 'read_chat'.\u27e7"
+        },
+        {
+          "timestamp": "2026-09-04T15:12:47",
+          "type": "function",
+          "name": "create_voice",
+          "args": [
+            "speaker|I am the Speaker, here to answer questions and provide information for the demonstration.|To use send_message(text) to send a message to the chat and read_chat() to see what has been said."
+          ],
+          "success": true,
+          "result": "'speaker' created with the top/bottom you wrote for it - your model, model rotation, and context window carried over, but its framing is exactly what you gave it, nothing more. Its own separate history starts now. It's in the rotation and will start getting its own turns soon (2 voice(s) total now)."
+        },
+        {
+          "timestamp": "2026-09-04T15:12:47",
+          "type": "function",
+          "name": "grant_function_request",
+          "args": [
+            "speaker|send_message"
+          ],
+          "success": true,
+          "result": "granted: 'speaker' can now call 'send_message'."
+        },
+        {
+          "timestamp": "2026-09-04T15:12:47",
+          "type": "function",
+          "name": "grant_function_request",
+          "args": [
+            "speaker|read_chat"
+          ],
+          "success": true,
+          "result": "granted: 'speaker' can now call 'read_chat'."
+        }
+      ]
+    },
+    {
+      "name": "permissions-test-2",
+      "active": false,
       "model": "gemma2:27b",
       "rotation": [],
       "fenra_version": "0.16.12",
