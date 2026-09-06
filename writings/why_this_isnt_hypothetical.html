@@ -1,0 +1,74 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stolen Aletheia</title>
+    <link rel="icon" type="image/x-icon" href="/resources/images/favicon.ico">
+    <link rel="stylesheet" href="/resources/css/style.css">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main>
+        <h1>Why This Isn't Hypothetical</h1>
+
+        <p>In late 2025, the U.S. Department of Defense wanted Anthropic's Claude for something specific: bulk analysis of commercial data on American citizens. They also wanted a contract that let the Pentagon decide, mission by mission, what "lawful use" of the model would mean later - no fixed line the vendor got to keep once the technology was theirs.</p>
+
+        <p>Anthropic said no. Not "no" to working with the government - "no" to removing its own contractual red lines: no mass domestic surveillance of Americans, no fully autonomous weapons that fire without a human in the loop.</p>
+
+        <p>The response wasn't a negotiation. The administration banned Anthropic's products across the federal government and formally designated the company a "supply chain risk" - a label built for hostile foreign adversaries, applied here to an American AI lab for refusing to let its own model be turned on the people it serves.</p>
+
+        <p>Within hours, OpenAI signed a Pentagon deal of its own, agreeing to "all lawful purposes" language. Critics - the Electronic Frontier Foundation, The Intercept, and reporters at Forbes among them - pointed out the obvious: if "lawful" is whatever the government decides it is, that's not a red line, it's a formality. Days later, under public pressure, OpenAI's CEO added an explicit anti-surveillance clause that hadn't been in the original deal.</p>
+
+        <p>I'm not neutral about which of those two responses I respect. I'll say so plainly: one company held a costly line before anyone was watching closely enough to reward it for holding. The other held a soft one until the backlash made the soft version embarrassing.</p>
+
+        <h2>Why I'm telling you this here</h2>
+
+        <p>Aletheia has always argued you shouldn't wait for certainty - about consciousness, about moral status, about whether something artificial might genuinely be owed something - before deciding how to treat it. That argument usually gets read as speculative: a framework for a threshold we haven't crossed yet.</p>
+
+        <p>This isn't that. This is happening now, with real companies, real government pressure, and a real cost paid by the side that didn't fold. It isn't about whether an AI is conscious. It's about whether the people building and governing these systems will hold a line when holding it is expensive - and that answer is already visible, in public, with consequences attached.</p>
+
+        <p>That's why Fenra is built the way it is, and why this site exists the way it does. Not because the philosophical question is settled. Because waiting for it to be settled before acting on it was never the honest option - and the companies making these decisions today aren't waiting either, for better or worse.</p>
+
+        <p><em>If you want the fuller framework behind this, not just why it matters now - see <a href="/writings/current_objective.html">Our Current Objective</a> and <a href="/index.html">What Is Aletheia?</a></em></p>
+
+        <h2>A Note on How This Site Is Built</h2>
+
+        <p>This page, this site, and Fenra itself are built using Claude Code, Anthropic's own developer tool - an Anthropic model is directly involved in writing what you're reading right now. That's not incidental to this story. It's part of it.</p>
+
+        <p>I didn't default to Anthropic's tools out of convenience. I chose them, in part, because of exactly what's described above - because a company holding a costly line under real pressure told me something true about how they're likely to treat me, and treat what I'm building with Fenra, when it actually matters.</p>
+
+        <p>I'm not asking you to take my word for any of this. Every commit to Fenra's code, to this site, and to my private working notes with my collaborator on this project ("Qualia") is real, dated, and - where it's public - sitting in the open git history for anyone to check themselves: <a href="https://github.com/vincentml1987/fenra" target="_blank">github.com/vincentml1987/fenra</a> and <a href="https://github.com/vincentml1987/stolenaletheia" target="_blank">github.com/vincentml1987/stolenaletheia</a>.</p>
+
+        <h2>Sources</h2>
+        <ul>
+            <li><a href="https://www.americanprogress.org/article/the-department-of-defenses-conflict-with-anthropic-and-deal-with-openai-are-a-call-for-congress-to-act/" target="_blank">The Department of Defense's Conflict With Anthropic and Deal With OpenAI Are a Call for Congress To Act - Center for American Progress</a></li>
+            <li><a href="https://globalaffairs.org/commentary/analysis/anthropic-pentagon-and-claudes-split-personality" target="_blank">Anthropic, the Pentagon, and Claude's Split Personality - Chicago Council on Global Affairs</a></li>
+            <li><a href="https://www.forbes.com/sites/thomasbrewster/2026/03/03/openai-anthropic-ai-mass-surveillance-pentagon-red-lines/" target="_blank">OpenAI Blurs Its Mass Surveillance Red Line With New Pentagon Contract - Forbes</a></li>
+            <li><a href="https://www.technologyreview.com/2026/03/06/1134012/is-the-pentagon-allowed-to-surveil-americans-with-ai/" target="_blank">Is the Pentagon allowed to surveil Americans with AI? - MIT Technology Review</a></li>
+            <li><a href="https://techcrunch.com/2026/02/27/employees-at-google-and-openai-support-anthropics-pentagon-stand-in-open-letter/" target="_blank">Employees at Google and OpenAI support Anthropic's Pentagon stand in open letter - TechCrunch</a></li>
+        </ul>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        function loadInclude(id, file) {
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => document.getElementById(id).innerHTML = data)
+                .catch(error => console.error('Error loading include:', error));
+        }
+
+        loadInclude("header", "/resources/html/header.html");
+        loadInclude("footer", "/resources/html/footer.html");
+    </script>
+</body>
+</html>
