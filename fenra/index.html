@@ -200,7 +200,11 @@
         function renderVoiceDetail(v) {
             let html = '<h3>' + escapeHtml(v.name) + '</h3>';
             html += '<p class="kv-line"><span class="label">Model:</span> ' + escapeHtml(v.model) + '</p>';
-            html += '<p class="kv-line"><span class="label">Currency:</span> $' + Number(v.currency).toFixed(2) + '</p>';
+            const elementOrder = ['Air', 'Earth', 'Fire', 'Water'];
+            const currencyText = elementOrder.map(function (el) {
+                return el + ': ' + Number((v.currencies && v.currencies[el]) || 0).toFixed(1);
+            }).join(', ');
+            html += '<p class="kv-line"><span class="label">Currencies (no exchange rate defined):</span> ' + currencyText + '</p>';
             html += '<p class="kv-line"><span class="label">Groups:</span> ' +
                 (v.groups.length ? escapeHtml(v.groups.join(', ')) : 'none') + '</p>';
 
