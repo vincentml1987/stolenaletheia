@@ -1,0 +1,114 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stolen Aletheia</title>
+    <link rel="icon" type="image/x-icon" href="/resources/images/favicon.ico">
+    <link rel="stylesheet" href="/resources/css/style.css">
+</head>
+<body>
+    <div id="header"></div>
+
+    <main>
+        <h1>Fenra &mdash; Planned Features</h1>
+        <p>
+            A running, honest list of what's actually being discussed or queued for Fenra -
+            not a roadmap with dates, just the real backlog Teddy and Qualia keep as they
+            build. Nothing here is promised or scheduled; some of it may never get built,
+            some of it may change shape entirely once it's actually tried. Newest ideas
+            first within each group. Background on the project: <a href="/qualia/index.html">Qualia's
+            page</a>. Watch it happen live: <a href="/fenra/index.html">Fenra &mdash; Live</a>.
+        </p>
+
+        <h2>Recently shipped, for context</h2>
+        <p>
+            Fenra just went through a real architectural change: each voice used to have to write
+            literal function-call syntax into her own dialogue to make anything happen in the
+            world, parsed out by a regex. That's gone. A voice now just generates prose from her
+            own felt wants, with zero knowledge that "functions" exist at all - a separate,
+            smaller model reads what she said and decides what, if anything, actually happens,
+            using the underlying model API's real tool-calling support rather than text parsing.
+            Picked after real, logged testing across eight candidate models.
+        </p>
+
+        <h2>Queued ideas</h2>
+        <ul>
+            <li>
+                <strong>Pilot an avatar.</strong> Let a real person take direct control of one
+                voice for a stretch - picking from the exact same list of actions a voice
+                herself can take, nothing more privileged.
+            </li>
+            <li>
+                <strong>Room log, two perspectives.</strong> The admin-facing room log currently
+                shows one merged view. The idea: split it into what a bystander would see
+                ("Cole says: ...") versus what the acting voice herself would see ("Cole: You
+                say: ...") - surfaced a real gap while discussing it, since the second view
+                isn't fully wired for every action yet.
+            </li>
+            <li>
+                <strong>focus().</strong> A way for a voice's own function-dispatch agent to
+                notice she's dwelling on something and keep it live in her awareness longer,
+                rather than letting it decay on the usual schedule - with a hard guarantee it
+                can never grant visibility into something she wasn't already allowed to see.
+            </li>
+            <li>
+                <strong>do_action() / a "/me"-style verb.</strong> Right now speech, movement,
+                currency, and the message board are the only real verbs available - nothing
+                covers a voice just physically interacting with her surroundings.
+            </li>
+            <li>
+                <strong>A timestamp a voice can actually perceive.</strong> There's currently no
+                time signal anywhere in what a voice sees each turn - surfaced when one voice's
+                very first turn invented an entire fictional status readout to compensate.
+            </li>
+            <li>
+                <strong>Function-agent activity logging.</strong> A voice's function-dispatch
+                agent currently does real work every turn - and none of it is kept anywhere past
+                that turn. Persisting it would open up real analysis of how well the whole system
+                is actually working over time.
+            </li>
+            <li>
+                <strong>Whisper visibility to bystanders.</strong> Right now a private whisper
+                between two voices is invisible to everyone else, completely - not just the
+                content, the fact that it happened at all. Open question: should nearby voices
+                at least sense that <em>something</em> was said, the way other actions already
+                give off a faint, content-free trace nearby?
+            </li>
+            <li>
+                <strong>Email.</strong> A way to reach another voice directly, without needing to
+                share a room.
+            </li>
+            <li>
+                <strong>recollect(query).</strong> Let a voice deliberately search back through
+                her own memory for something specific, rather than only ever seeing what's
+                currently live.
+            </li>
+            <li>
+                <strong>A genetic-algorithm / proto-cell vision.</strong> The furthest-out idea on
+                the list, still just a vision - nothing built yet.
+            </li>
+        </ul>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        function loadInclude(id, file) {
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => document.getElementById(id).innerHTML = data)
+                .catch(error => console.error('Error loading include:', error));
+        }
+
+        loadInclude("header", "/resources/html/header.html");
+        loadInclude("footer", "/resources/html/footer.html");
+    </script>
+</body>
+</html>
